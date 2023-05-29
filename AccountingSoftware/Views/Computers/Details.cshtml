@@ -1,0 +1,135 @@
+﻿@model AccountingSoftware.Models.Computer
+
+@{
+    ViewData["Title"] = "Компьютеры: детализация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Детализация</h1>
+
+<div>
+    <h4>Компьютер</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Audience)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.Audience != null)
+            {
+                @Html.DisplayFor(model => model.Audience.Name)
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IpAdress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IpAdress)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Processor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Processor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Videocard)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Videocard)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RAM)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RAM)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalSpace)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalSpace)
+        </dd>
+    </dl>
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
+    @if (TempData["fromAudience"] == null)
+    {
+        <a asp-action="Index">Назад к списку</a>
+    }
+    else
+    {
+        <a asp-controller= "Audiences" asp-action="Index">Назад к списку</a>
+    }
+</div>
+
+<hr/>
+<h4>Список установленного ПО</h4>
+<a asp-controller="InstalledSoftware" asp-action="SelectSoftware" asp-route-computerId="@Model.Id">Добавить ПО на ПК</a>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Computers.First().N)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().SoftwareTechnicalDetails.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.Key)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceType.Name)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.DateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Softwares)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(model => item.SoftwareTechnicalDetails.Name)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(model => item.Licence.LicenceDetails.Key)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(model => item.Licence.LicenceType.Name)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(model => item.Licence.LicenceDetails.DateStart)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(model => item.Licence.LicenceDetails.DateEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Licence.LicenceDetails.Price)
+                    </td>
+                    <td>
+                    <a asp-controller="InstalledSoftware" asp-action="UnistallSoftware" asp-route-computerId="@Model.Id" asp-route-softwareId ="@item.Id" asp-route-fromComputerDetails ="@true">Удалить</a> @*|
+                        <a asp-controller="Computers" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-controller="Computers" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

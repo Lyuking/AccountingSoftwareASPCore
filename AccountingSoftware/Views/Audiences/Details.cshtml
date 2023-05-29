@@ -1,0 +1,106 @@
+﻿@model AccountingSoftware.Models.ViewModels.AudiencesDetailsViewModel
+
+@{
+    ViewData["Title"] = "Аудитории: Детализация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Детализация</h1>
+<div>
+    <h4>Сведения о аудитории</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Audience.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Audience.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Audience.Id">Изменить</a> |
+    <a asp-action="Index" asp-route-id="@Model.Audience">Список аудиторий</a>
+</div>
+
+<hr>
+@*<div class="container p-0">
+    <div class="row pb-3">
+        <div class="col-md-9">
+            <h4>Состав команды</h4>
+        </div>
+        <div class="col-md-3 text-end">
+            <a asp-action="AddPlayerToTeam" asp-route-id="@Model.Team.Id" class="btn btn-info">Добавить в команду</a>
+        </div>
+
+    </div>
+</div>*@
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Computers.First().N)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Computers.First().IpAdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Computers.First().Processor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Computers.First().Videocard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Computers.First().RAM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Computers.First().TotalSpace)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Computers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.IpAdress)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Processor)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Videocard)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.RAM)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.TotalSpace)
+                </td>
+                <td>
+                    <a asp-controller="Computers" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                    <a asp-controller="Computers" asp-action="Details" asp-route-id="@item.Id">Детализация</a> |
+                    <a asp-controller="Computers" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<div>
+    <h4>Audience</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@

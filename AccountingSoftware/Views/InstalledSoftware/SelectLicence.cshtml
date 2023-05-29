@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AccountingSoftware.Models.Software>
+
+@{
+    ViewData["Title"] = "Выбор лицензии";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Выбор лицензии</h1>
+
+@*<div class="form-group">
+    <a asp-controller="Employees" asp-action="Create" asp-route-fromSelectEmployee="true" class="btn btn-info">Добавить нового работника</a>
+</div>
+*@
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Licence.LicenceDetails.Key)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Licence.LicenceType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Licence.LicenceDetails.DateStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Licence.LicenceDetails.DateEnd)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Licence.LicenceDetails.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Licence.LicenceType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Licence.LicenceDetails.DateStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Licence.LicenceDetails.DateEnd)
+                </td>
+                <td>
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            @*<input type="hidden" name="softwareId" value="@item.Id" />*@
+                            @if (TempData.Peek("audienceId") == null)
+                            {
+                                <input type="submit" asp-action ="Add" asp-route-softwareId="@item.Id" asp-route-licenceDetailsId ="@item.Licence.LicenceDetails.Id" value="Выбрать" class="btn btn-primary" />
+                            }
+                            else
+                            {
+                                <input type="submit" asp-action ="AddToAudience" asp-route-softwareId="@item.Id" asp-route-licenceDetailsId ="@item.Licence.LicenceDetails.Id" value="Выбрать" class="btn btn-primary" />
+                            }
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+
+    }
+</table>

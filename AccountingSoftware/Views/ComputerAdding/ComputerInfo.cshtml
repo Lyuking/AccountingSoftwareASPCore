@@ -1,0 +1,98 @@
+﻿
+<h2>Добавление компьютера</h2>
+
+@*<form asp-action="ChooseDate" class="form-group">
+    <input type="hidden" name="GuestId" value="@ViewBag.GuestId" />
+
+    <div class="form-group">
+        <label class="control-label">ФИО покупателя:</label>
+        <label class="control-label">@ViewBag.Guest.Name</label>
+    </div>
+
+    <div class="form-inline">
+        <label class="control-label col-md-4">Выберите дату:</label>
+        <div class="col-md-8">
+            <input type="date" name="SessionDate" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group pt-3">
+        <input type="submit" value="Выбрать" class="btn btn-primary" />
+    </div>
+</form>*@
+@model AccountingSoftware.Models.Computer
+
+@{
+    ViewData["Title"] = "Добавление компьютера";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h1>Добавление компьютера</h1>*@
+
+<h4>Компьютер</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method='post'>
+            
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            <div class="form-group">
+                @if(ViewBag.Audience is null)
+                {
+                    <label asp-for="AudienceId" asp-route-audienceId="@null" class="control-label">Аудитория не выбрана</label>                
+                }
+                else
+                {
+                    <label asp-for="AudienceId" asp-route-audienceId="@ViewBag.Audience.Id" class="control-label">Аудитория: @ViewBag.Audience.Name</label>
+                }                
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="AudienceId" name="AudienceId" value="@ViewBag.Audience?.Id" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IpAdress" class="control-label"></label>
+                <input asp-for="IpAdress" class="form-control" />
+                <span asp-validation-for="IpAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Processor" class="control-label"></label>
+                <input asp-for="Processor" class="form-control" />
+                <span asp-validation-for="Processor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Videocard" class="control-label"></label>
+                <input asp-for="Videocard" class="form-control" />
+                <span asp-validation-for="Videocard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RAM" class="control-label"></label>
+                <input asp-for="RAM" class="form-control" />
+                <span asp-validation-for="RAM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalSpace" class="control-label"></label>
+                <input asp-for="TotalSpace" class="form-control" />
+                <span asp-validation-for="TotalSpace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" @*asp-route-audienceId= "@ViewBag.Audience.Id"*@ class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">К списку аудиторий</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

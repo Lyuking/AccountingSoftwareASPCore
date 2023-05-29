@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Информация о добавленном программном обеспечении.";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Результат установки по на компьютеры в аудитории</h1>
+<hr/>
+<p style="color:green">Успешно было добавлено @ViewBag.Count отсутствующих программных обеспечений на компьютеры</p>
+<p style="color:darkred">Не было добавлено @ViewBag.TotalCount программных обеспечений в виду их наличия на компьютерах или отсутствия незанятых лицензий</p>
+<p style="color:darkorange">Осталось доступных лицензий: @ViewBag.AvailableCount</p>
+<p>
+    <a style="color:darkblue " asp-action="Index">Вернуться к списку лицензирования </a>
+</p>
+

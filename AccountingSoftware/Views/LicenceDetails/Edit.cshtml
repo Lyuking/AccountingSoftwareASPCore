@@ -1,0 +1,90 @@
+﻿@model AccountingSoftware.Models.LicenceDetails
+
+@{
+    ViewData["Title"] = "Редактирование лицензии";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Редактирование лицензии</h1>
+
+@*<h4>LicenceDetails</h4>*@
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Key" class="control-label"></label>
+                <input asp-for="Key" class="form-control" />
+                <span asp-validation-for="Key" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateStart" class="control-label"></label>
+                <input asp-for="DateStart" class="form-control" />
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateEnd" class="control-label"></label>
+                <input asp-for="DateEnd" class="form-control" />
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Count" class="control-label"></label>
+                <input asp-for="Count" class="form-control" />
+                <span asp-validation-for="Count" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">К списку лицензий</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+        <script> src="https://code.jquery.com/jquery-3.5.1.min.js%22%3E"</script>   
+        <script>
+        $(document).ready(function () {
+            $("#DateEnd").change(function () {
+                var startDate = new Date($("#DateStart").val());
+                var endDate = new Date($(this).val());
+
+                if (endDate < startDate) {
+                        alert("Дата окончания не может быть раньше даты начала.");
+                        $(this).val("");
+                    }
+                else if (endDate < Date.parse("01.01.2000")){
+                        alert("Дата установки не может быть раньше 01.01.2000.");
+                        $(this).val("");
+                }
+                });
+
+                $("#DateStart").change(function () {
+                    var startDate = new Date($(this).val());
+                    var endDate = new Date($("#DateEnd").val());
+
+                    if (endDate < startDate) {
+                        alert("Дата начала не может быть позже даты окончания.");
+                        $("#DateEnd").val("");
+                    }
+                    else if (startDate < Date.parse("01.01.2000")) {
+                        alert("Дата начала лицензии не может быть раньше 01.01.2000.");
+                        $(this).val("");
+                    }
+                });
+            });
+        </script>
+}

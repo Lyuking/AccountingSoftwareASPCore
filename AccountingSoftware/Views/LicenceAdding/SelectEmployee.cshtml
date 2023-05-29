@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AccountingSoftware.Models.Employee>
+
+    @{
+    ViewData["Title"] = "Выбор работника";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Выбор работника</h1>
+
+<div class="form-group">
+    <a asp-controller="Employees" asp-action="Create" asp-route-fromSelectEmployee="true" class="btn btn-info">Добавить нового работника</a>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            <input type="hidden" name="EmployeeId" value="@item.Id" />
+                            <input type="submit" value="Выбрать" class="btn btn-primary" />
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+
+    }
+</table>

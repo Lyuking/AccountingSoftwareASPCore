@@ -1,0 +1,212 @@
+﻿@model AccountingSoftware.Models.SoftwareTechnicalDetails
+
+@{
+    ViewData["Title"] = "Детализация ПО";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Программное обеспечение: Детализация</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubjectArea)
+        </dt>
+        <dd class="col-sm-10">
+            @if (!(Model.SubjectArea is null))
+            {
+                @Html.DisplayFor(modelItem => Model.SubjectArea.Name)
+            }
+            else
+            {
+                @Html.Display("Отсутствует")
+            }
+
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RequiredSpace)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RequiredSpace)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+        <dd class="col-sm-10">
+            @if (ViewBag.Photodata != null)
+            {
+                <img class="mt-4 mb-4" width="200"
+                 src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Photodata))">
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
+    <a asp-action="Index">Вернуться к списку ПО</a>
+</div>
+
+@if(Model.Softwares.Any(t => t.Computers.Any()))
+{
+   <hr />
+<h4>Список компьютеров, на которых установлено ПО</h4>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.Key)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.LicenceDetails.DateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Softwares.First().Licence.Employee.FullName)
+            </th>
+            <th>
+                @Html.DisplayName("Аудитории")
+            </th>
+            <th>
+                @Html.DisplayName("Номера компьютеров")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach (var software in Model.Softwares)
+        {
+            List<Audience> audience = new List<Audience>();
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.DateStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.DateEnd)
+                </td>
+                <td>
+                    @if(software.Licence.Employee != null)
+                    {
+                        Html.DisplayFor(model => software.Licence.Employee.FullName);
+                    }
+                </td>
+                @foreach (var computer in software.Computers)
+                {
+
+                    @if (computer.Audience != null)
+                    {
+                        @if (!audience.Contains(computer.Audience))
+                        {
+                            audience.Add(computer.Audience);
+                        }
+                    }
+
+                }
+
+                    <td>
+                    @foreach (var item in audience)
+                    {
+
+                        @Html.DisplayFor(model => item.Name)
+                        <br/>
+                    }
+                    </td>
+                    <td>
+                    @foreach(var item in audience)
+                    {
+                            
+                            @foreach (var computers in software.Computers.Where(s => s.AudienceId == item.Id))
+                            {
+
+                                @Html.DisplayFor(model => computers.Number)
+                            <br />
+                            }
+                    
+                    }
+                    </td>
+                    
+            </tr>
+        }
+        </tbody>
+    <tr>
+        <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>Копии ПО, расположенные не в аудиториях</td>
+    <td></td>
+    <td></td>
+    </tr>
+        <tbody>
+        @foreach (var software in Model.Softwares)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.DateStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => software.Licence.LicenceDetails.DateEnd)
+                </td>
+                <td>
+                    @if(software.Licence.Employee != null)
+                    {
+                        Html.DisplayFor(model => software.Licence.Employee.FullName);
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @foreach (var computers in software.Computers.Where(s => s.AudienceId == null))
+                    {
+                        @Html.DisplayFor(model => computers.Number)
+                        ;
+                        <br />
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>   
+</table> 
+}
+
+@section Scripts {
+    <script>
+        $('#summernote').summernote({
+            height: 100
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

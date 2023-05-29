@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AccountingSoftware.Models.Computer>
+
+@{
+    ViewData["Title"] = "Компьютеры";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Компьютеры</h1>
+<p>
+    <a style="color:darkred " asp-controller="Audiences" asp-action="Index">Список аудиторий</a>
+</p>
+<hr />
+<p>
+    <a asp-action="Create">Добавить новый компьютер</a>
+</p>
+<div class="form-group">
+    <a asp-action="GetReport" class="btn btn-info">Получить отчет об установленном ПО</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Audience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpAdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Processor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Videocard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RAM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalSpace)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if(item.Audience is null)
+                {
+                        @Html.Display("Отсутствует");
+                }
+                else
+                {
+                        @Html.DisplayFor(modelItem => item.Audience.Name);                        
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAdress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Processor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Videocard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RAM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalSpace)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Детализация</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

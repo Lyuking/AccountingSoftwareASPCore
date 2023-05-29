@@ -1,0 +1,42 @@
+﻿@model IEnumerable<AccountingSoftware.Models.SoftwareTechnicalDetails>
+
+        @{
+    ViewData["Title"] = "Выбор ПО";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Выбор ПО</h1>
+
+<div class="form-group">
+    <a asp-controller="SoftwareTechnicalDetailsAdding" asp-action="Index" asp-route-fromSelectSoftware="true" class="btn btn-info">Добавить новое ПО</a>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>       
+                <td>
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            <input type="hidden" name="SoftwareTechnicalDetailsId" value="@item.Id" />
+                            <input type="submit" value="Выбрать" class="btn btn-primary" />
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+
+    }
+</table>

@@ -1,0 +1,61 @@
+﻿@model AccountingSoftware.Models.Computer
+
+@{
+    ViewData["Title"] = "Добавление компьютера";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Добавление компьютера</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AudienceId" class="control-label"></label>
+                <select asp-for="AudienceId" class ="form-control" asp-items="ViewBag.AudienceId"></select>
+                <div class="form-group">
+                    <a asp-controller="Audiences" asp-action="Create" asp-route-fromComputers="true"
+                       class="btn btn-info">Создать новую аудиторию</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="IpAdress" class="control-label"></label>
+                <input asp-for="IpAdress" class="form-control" />
+                <span asp-validation-for="IpAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Processor" class="control-label"></label>
+                <input asp-for="Processor" class="form-control" />
+                <span asp-validation-for="Processor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Videocard" class="control-label"></label>
+                <input asp-for="Videocard" class="form-control" />
+                <span asp-validation-for="Videocard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RAM" class="control-label"></label>
+                <input asp-for="RAM" class="form-control" />
+                <span asp-validation-for="RAM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalSpace" class="control-label"></label>
+                <input asp-for="TotalSpace" class="form-control" />
+                <span asp-validation-for="TotalSpace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
